@@ -78,6 +78,7 @@ namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
             //M_minor_max = null;
             //M_minor_min = null;
             //ErrorMessage = "";
+            ReportingPierPointLocation = PierPointLocation.Both;
             Story = "";
             V_major_max = 0.0;
             V_major_min = 0.0;
@@ -90,7 +91,7 @@ namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
             M_minor_max = 0.0;
             M_minor_min = 0.0;
             ErrorMessage = "";
-            ReportingPierPointLocation = PierPointLocation.Both;
+
         }
 
 
@@ -141,9 +142,10 @@ namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
             set
             {
                 _SelectedCombo = value;
-                RaisePropertyChanged("SelectedCombo");
-                //OnNodeModified(true); 
                 UpdateForceOutput();
+                RaisePropertyChanged("SelectedCombo");
+                OnNodeModified(true); 
+                
             }
         }
         #endregion
@@ -162,9 +164,10 @@ namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
             set
             {
                 _SelectedStory = value;
-                RaisePropertyChanged("SelectedStory");
-                //OnNodeModified(true); 
                 UpdateForceOutput();
+                RaisePropertyChanged("SelectedStory");
+                OnNodeModified(true); 
+                
                 Story = value;
             }
         }
@@ -186,10 +189,11 @@ namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
             set
             {
                 _SelectedPier = value;
-                RaisePropertyChanged("SelectedPier");
-                //OnNodeModified(true); 
                 UpdateStoryList();
                 UpdateForceOutput();
+                RaisePropertyChanged("SelectedPier");
+                OnNodeModified(true); 
+
             }
         }
 
@@ -212,9 +216,10 @@ namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
             set
             {
                 _ReportingPierPointLocation = value;
-                RaisePropertyChanged("ReportingPierPointLocation");
-                //OnNodeModified(true); 
                 UpdateForceOutput();
+                RaisePropertyChanged("ReportingPierPointLocation");
+                OnNodeModified(true); 
+
             }
         }
         #endregion
@@ -275,7 +280,7 @@ namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
             {
                 _AvaliableStories = value;
                 RaisePropertyChanged("AvaliableStories");
-                //OnNodeModified(true); 
+                OnNodeModified(true); 
             }
         }
         #endregion
@@ -619,7 +624,9 @@ namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
                     //{
                     if (SelectedStory!=null & SelectedCombo!=null)
                     {
-                        cr = AllResults.Where(k => k.ComboName == SelectedCombo).SelectMany(r => r.PierForces.Where(f => f.PierName == SelectedPier).Select(a => a.Result)).ToList();
+
+                        cr = AllResults.Where(k => k.ComboName == SelectedCombo).SelectMany(r => r.PierForces.Where(f => f.PierName == SelectedPier).Where(b => b.Result.PierPointLocation == ReportingPierPointLocation).Select(a => a.Result)).ToList();
+                    
                     }
                     //}
                 }
@@ -630,7 +637,7 @@ namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
                     //{
                     if (SelectedStory != null & SelectedCombo != null)
                     {
-                        cr = AllResults.Where(k => k.ComboName == SelectedCombo).SelectMany(r => r.PierForces.Where(f => f.PierName == SelectedPier).Where(b=> b.Result.PierPointLocation==ReportingPierPointLocation).Select(a => a.Result)).ToList();
+                        cr = AllResults.Where(k => k.ComboName == SelectedCombo).SelectMany(r => r.PierForces.Where(f => f.PierName == SelectedPier).Select(a => a.Result)).ToList();
                     }
                     //}
                 }
