@@ -126,6 +126,14 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Controls\DataEntryElement.xaml.cs">
+      <DependentUpon>DataEntryElement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Common\Controls\EnumControl.xaml.cs">
+      <DependentUpon>EnumControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Common\Controls\EnumDataCollection.cs" />
+    <Compile Include="Common\Controls\EnumDataElement.cs" />
     <Compile Include="ViewModels\GroupForceExtract.cs" />
     <Compile Include="ViewModels\SelectionForceExtract.cs" />
     <Compile Include="ViewModels\PierForceExtract.cs" />
@@ -148,6 +156,18 @@
     <Compile Include="Views\SelectionReactionExtractView.xaml.cs">
       <DependentUpon>SelectionReactionExtractView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Common\Controls\DataEntryElement.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Common\Controls\EnumControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Common\Controls\EnumDataTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\GroupForceExtractView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

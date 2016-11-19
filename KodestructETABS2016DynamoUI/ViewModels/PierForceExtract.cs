@@ -1,6 +1,7 @@
 ﻿ 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Controls;
 using Dynamo.Controls;
 using Dynamo.Models;
@@ -16,9 +17,11 @@ using GalaSoft.MvvmLight.Command;
 using Kodestruct.ETABS.v2016.Interop.Entities.Group;
 using Kodestruct.ETABS.v2016.Interop;
 using System.Collections.ObjectModel;
-using Kodestruct.ETABS.v2016.Interop.Entities.Frame.ForceExtraction;
 using Kodestruct.ETABS.v2016.Interop.Entities.Frame;
 using Kodestruct.ETABS.v2016.ModelOutput.Wall;
+using Kodestruct.ETABS.v2016.Interop.Entities.Wall.ForceExtraction;
+using Kodestruct.ETABS.v2016.Interop.Entities.Wall.ForceExtraction.Data;
+using Kodestruct.ETABS.v2016.Entities.Enums;
 
 
 namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
@@ -38,7 +41,7 @@ namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
         public PierForceExtract()
         {
 
-
+            OutPortData.Add(new PortData("Story", "Stories at which the force is reported"));
             OutPortData.Add(new PortData("V_major_max", "Major (strong axis) shear"));
             OutPortData.Add(new PortData("V_major_min", "Major (strong axis) shear"));
             OutPortData.Add(new PortData("M_major_max", "Major (strong axis) moment"));
@@ -53,8 +56,8 @@ namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
             RegisterAllPorts();
             SetDefaultParameters();
 
-            RefreshCommand = new RelayCommand(RefreshEtabsData, canGetForces);
-            GetReactionsCommand = new RelayCommand(GetForces, canGetForces);
+            //RefreshCommand = new RelayCommand(RefreshEtabsData, canGetForces);
+            GetForcesCommand = new RelayCommand(GetForces, canGetForces);
             //PropertyChanged += NodePropertyChanged;
         }
 
@@ -62,17 +65,32 @@ namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
 
         private void SetDefaultParameters()
         {
+
+            //Story = null;
+            //V_major_max = null;
+            //V_major_min = null;
+            //M_major_max = null;
+            //M_major_min = null;
+            //P_max       = null;
+            //P_min       = null;
+            //V_minor_max = null;
+            //V_minor_min = null;
+            //M_minor_max = null;
+            //M_minor_min = null;
+            //ErrorMessage = "";
+            Story = "";
             V_major_max = 0.0;
             V_major_min = 0.0;
             M_major_max = 0.0;
             M_major_min = 0.0;
-            P_max = 0.0;
-            P_min = 0.0;
+            P_max       = 0.0;
+            P_min       = 0.0;
             V_minor_max = 0.0;
             V_minor_min = 0.0;
             M_minor_max = 0.0;
             M_minor_min = 0.0;
             ErrorMessage = "";
+            ReportingPierPointLocation = PierPointLocation.Both;
         }
 
 
@@ -125,9 +143,82 @@ namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
                 _SelectedCombo = value;
                 RaisePropertyChanged("SelectedCombo");
                 //OnNodeModified(true); 
+                UpdateForceOutput();
             }
         }
         #endregion
+
+        #region SelectedStoryProperty
+
+        /// <summary>
+        /// SelectedFloors property
+        /// </summary>
+        /// <value>SelectedFloors</value>
+        public string _SelectedStory;
+
+        public string SelectedStory
+        {
+            get { return _SelectedStory; }
+            set
+            {
+                _SelectedStory = value;
+                RaisePropertyChanged("SelectedStory");
+                //OnNodeModified(true); 
+                UpdateForceOutput();
+                Story = value;
+            }
+        }
+
+
+        #endregion
+
+        #region SelectedPierProperty
+
+        /// <summary>
+        /// SelectedPier property
+        /// </summary>
+        /// <value>SelectedPier</value>
+        public string _SelectedPier;
+
+        public string SelectedPier
+        {
+            get { return _SelectedPier; }
+            set
+            {
+                _SelectedPier = value;
+                RaisePropertyChanged("SelectedPier");
+                //OnNodeModified(true); 
+                UpdateStoryList();
+                UpdateForceOutput();
+            }
+        }
+
+
+        #endregion
+
+
+
+        #region ReportingPierPointLocationProperty
+
+        /// <summary>
+        /// ReportingPierPointLocation property
+        /// </summary>
+        /// <value>ReportingPierPointLocation</value>
+        public PierPointLocation _ReportingPierPointLocation;
+
+        public PierPointLocation ReportingPierPointLocation
+        {
+            get { return _ReportingPierPointLocation; }
+            set
+            {
+                _ReportingPierPointLocation = value;
+                RaisePropertyChanged("ReportingPierPointLocation");
+                //OnNodeModified(true); 
+                UpdateForceOutput();
+            }
+        }
+        #endregion
+
 
         #region ErrorMessageProperty
 
@@ -193,6 +284,25 @@ namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
 
         #region OutputProperties
 
+        #region StoryProperty
+
+        /// <summary>
+        /// Stories property
+        /// </summary>
+        /// <value>Stories</value>
+        private string _Story;
+
+        public string Story
+        {
+            get { return _Story; }
+            set
+            {
+                _Story = value;
+                RaisePropertyChanged("Story");
+                OnNodeModified(true);
+            }
+        }
+        #endregion
 
         #region V_major_maxProperty
 
@@ -200,7 +310,7 @@ namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
         /// V_major_max property
         /// </summary>
         /// <value>V_major_max</value>
-        public double _V_major_max;
+        private double _V_major_max;
 
         public double V_major_max
         {
@@ -220,7 +330,7 @@ namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
         /// V_major_min property
         /// </summary>
         /// <value>V_major_min</value>
-        public double _V_major_min;
+        private double _V_major_min;
 
         public double V_major_min
         {
@@ -240,7 +350,7 @@ namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
         /// M_major_max property
         /// </summary>
         /// <value>M_major_max</value>
-        public double _M_major_max;
+        private double _M_major_max;
 
         public double M_major_max
         {
@@ -260,7 +370,7 @@ namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
         /// M_major_min property
         /// </summary>
         /// <value>M_major_min</value>
-        public double _M_major_min;
+        private double _M_major_min;
 
         public double M_major_min
         {
@@ -280,7 +390,7 @@ namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
         /// P_max property
         /// </summary>
         /// <value>P_max</value>
-        public double _P_max;
+        private double _P_max;
 
         public double P_max
         {
@@ -300,7 +410,7 @@ namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
         /// P_min property
         /// </summary>
         /// <value>P_min</value>
-        public double _P_min;
+        private double _P_min;
 
         public double P_min
         {
@@ -320,7 +430,7 @@ namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
         /// V_minor_max property
         /// </summary>
         /// <value>V_minor_max</value>
-        public double _V_minor_max;
+        private double _V_minor_max;
 
         public double V_minor_max
         {
@@ -340,7 +450,7 @@ namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
         /// V_minor_min property
         /// </summary>
         /// <value>V_minor_min</value>
-        public double _V_minor_min;
+        private double _V_minor_min;
 
         public double V_minor_min
         {
@@ -360,7 +470,7 @@ namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
         /// M_minor_max property
         /// </summary>
         /// <value>M_minor_max</value>
-        public double _M_minor_max;
+        private double _M_minor_max;
 
         public double M_minor_max
         {
@@ -380,7 +490,7 @@ namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
         /// M_minor_min property
         /// </summary>
         /// <value>M_minor_min</value>
-        public double _M_minor_min;
+        private double _M_minor_min;
 
         public double M_minor_min
         {
@@ -405,20 +515,20 @@ namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
         protected override void SerializeCore(XmlElement nodeElement, SaveContext context)
         {
             base.SerializeCore(nodeElement, context);
-            //nodeElement.SetAttribute("BeamCopeCase", BeamCopeCase);
-            nodeElement.SetAttribute("V_major_max", V_major_max.ToString());
-            nodeElement.SetAttribute("V_major_min", V_major_min.ToString());
-            nodeElement.SetAttribute("M_major_max", M_major_max.ToString());
-            nodeElement.SetAttribute("M_major_min", M_major_min.ToString());
-            nodeElement.SetAttribute("P_max", P_max.ToString());
-            nodeElement.SetAttribute("P_min", P_min.ToString());
-            nodeElement.SetAttribute("V_minor_max", V_minor_max.ToString());
-            nodeElement.SetAttribute("V_minor_min", V_minor_min.ToString());
-            nodeElement.SetAttribute("M_minor_max", M_minor_max.ToString());
-            nodeElement.SetAttribute("M_minor_min", M_minor_min.ToString());
+
+            //nodeElement.SetAttribute("V_major_max", V_major_max.ToString());
+            //nodeElement.SetAttribute("V_major_min", V_major_min.ToString());
+            //nodeElement.SetAttribute("M_major_max", M_major_max.ToString());
+            //nodeElement.SetAttribute("M_major_min", M_major_min.ToString());
+            //nodeElement.SetAttribute("P_max", P_max.ToString());
+            //nodeElement.SetAttribute("P_min", P_min.ToString());
+            //nodeElement.SetAttribute("V_minor_max", V_minor_max.ToString());
+            //nodeElement.SetAttribute("V_minor_min", V_minor_min.ToString());
+            //nodeElement.SetAttribute("M_minor_max", M_minor_max.ToString());
+            //nodeElement.SetAttribute("M_minor_min", M_minor_min.ToString());
 
 
-            nodeElement.SetAttribute("SelectedCombo", SelectedCombo);
+            //nodeElement.SetAttribute("SelectedCombo", SelectedCombo);
 
         }
 
@@ -430,19 +540,19 @@ namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
             base.DeserializeCore(nodeElement, context);
 
 
-            var attribV_major_max = nodeElement.Attributes["V_major_max"]; V_major_max = Double.Parse(attribV_major_max.Value);
-            var attribV_major_min = nodeElement.Attributes["V_major_min"]; V_major_min = Double.Parse(attribV_major_min.Value);
-            var attribM_major_max = nodeElement.Attributes["M_major_max"]; M_major_max = Double.Parse(attribM_major_max.Value);
-            var attribM_major_min = nodeElement.Attributes["M_major_min"]; M_major_min = Double.Parse(attribM_major_min.Value);
-            var attribP_max = nodeElement.Attributes["P_max"]; P_max = Double.Parse(attribP_max.Value);
-            var attribP_min = nodeElement.Attributes["P_min"]; P_min = Double.Parse(attribP_min.Value);
-            var attribV_minor_max = nodeElement.Attributes["V_minor_max"]; V_minor_max = Double.Parse(attribV_minor_max.Value);
-            var attribV_minor_min = nodeElement.Attributes["V_minor_min"]; V_minor_min = Double.Parse(attribV_minor_min.Value);
+            //var attribV_major_max = nodeElement.Attributes["V_major_max"]; V_major_max = Double.Parse(attribV_major_max.Value);
+            //var attribV_major_min = nodeElement.Attributes["V_major_min"]; V_major_min = Double.Parse(attribV_major_min.Value);
+            //var attribM_major_max = nodeElement.Attributes["M_major_max"]; M_major_max = Double.Parse(attribM_major_max.Value);
+            //var attribM_major_min = nodeElement.Attributes["M_major_min"]; M_major_min = Double.Parse(attribM_major_min.Value);
+            //var attribP_max = nodeElement.Attributes["P_max"]; P_max = Double.Parse(attribP_max.Value);
+            //var attribP_min = nodeElement.Attributes["P_min"]; P_min = Double.Parse(attribP_min.Value);
+            //var attribV_minor_max = nodeElement.Attributes["V_minor_max"]; V_minor_max = Double.Parse(attribV_minor_max.Value);
+            //var attribV_minor_min = nodeElement.Attributes["V_minor_min"]; V_minor_min = Double.Parse(attribV_minor_min.Value);
 
-            var attribM_minor_max = nodeElement.Attributes["M_minor_max"]; M_minor_max = Double.Parse(attribM_minor_max.Value);
-            var attribM_minor_min = nodeElement.Attributes["M_minor_min"]; M_minor_min = Double.Parse(attribM_minor_min.Value);
+            //var attribM_minor_max = nodeElement.Attributes["M_minor_max"]; M_minor_max = Double.Parse(attribM_minor_max.Value);
+            //var attribM_minor_min = nodeElement.Attributes["M_minor_min"]; M_minor_min = Double.Parse(attribM_minor_min.Value);
 
-            var attrSC = nodeElement.Attributes["SelectedCombo"]; SelectedCombo = attrSC.Value;
+            //var attrSC = nodeElement.Attributes["SelectedCombo"]; SelectedCombo = attrSC.Value;
 
 
 
@@ -453,36 +563,101 @@ namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
 
         #region Commands
 
-        public RelayCommand RefreshCommand { get; private set; }
-        public RelayCommand GetReactionsCommand { get; private set; }
+        //public RelayCommand RefreshCommand { get; private set; }
+        public RelayCommand GetForcesCommand { get; private set; }
 
-        private void RefreshEtabsData()
+        //private void RefreshEtabsData()
+        //{
+        //    ErrorMessage = "";
+
+        //    try
+        //    {
+        //        ETABSModelManager manager = new ETABSModelManager();
+
+        //        List<string> comboNames = manager.GetModelComboNames();
+        //        AvaliableCombos = new ObservableCollection<string>(comboNames);
+
+        //        List<string> PierNames = manager.GetModelPierNames();
+        //        AvaliablePiers = new ObservableCollection<string>(PierNames);
+
+        //        List<string> StoryNames = manager.GetModelStoryNames();
+        //        AvaliableStories = new ObservableCollection<string>(StoryNames);
+        //    }
+        //    catch (Exception)
+        //    {
+
+        //        ErrorMessage = "Could not connect to ETABS model.";
+        //    }
+
+
+        //}
+
+        private void UpdateStoryList()
         {
-            ErrorMessage = "";
-
-            try
-            {
-                ETABSModelManager manager = new ETABSModelManager();
-
-                List<string> comboNames = manager.GetModelComboNames();
-                AvaliableCombos = new ObservableCollection<string>(comboNames);
-
-                List<string> PierNames = manager.GetModelPierNames();
-                AvaliablePiers = new ObservableCollection<string>(PierNames);
-
-                List<string> StoryNames = manager.GetModelStoryNames();
-                AvaliableStories = new ObservableCollection<string>(StoryNames);
-            }
-            catch (Exception)
-            {
-
-                ErrorMessage = "Could not connect to ETABS model.";
-            }
-
-
+               if (SelectedPier!=null)
+	            {
+                        if (AllResults!=null)
+                        {
+                            if (AvaliableCombos.Count > 0)
+                            {
+                                var resultsForCurrentPier = AllResults.Where(k => k.ComboName == AvaliableCombos[0]).SelectMany(r => r.PierForces.Where(f => f.PierName == SelectedPier).Select(a => a.Result.StoryName)).Distinct().ToList();
+                                AvaliableStories = new ObservableCollection<string>( resultsForCurrentPier);
+                            }
+                        }
+	            }
+            
         }
 
+        private void UpdateForceOutput()
+        {
+            List<WallPointResult> cr =null;
+            if (AllResults!=null)
+            {
+                if (ReportingPierPointLocation != PierPointLocation.Both)
+	            {
+                    //foreach (var story in SelectedStories)
+                    //{
+                    if (SelectedStory!=null & SelectedCombo!=null)
+                    {
+                        cr = AllResults.Where(k => k.ComboName == SelectedCombo).SelectMany(r => r.PierForces.Where(f => f.PierName == SelectedPier).Select(a => a.Result)).ToList();
+                    }
+                    //}
+                }
 
+                else
+                {
+                    //foreach (var story in SelectedStories)
+                    //{
+                    if (SelectedStory != null & SelectedCombo != null)
+                    {
+                        cr = AllResults.Where(k => k.ComboName == SelectedCombo).SelectMany(r => r.PierForces.Where(f => f.PierName == SelectedPier).Where(b=> b.Result.PierPointLocation==ReportingPierPointLocation).Select(a => a.Result)).ToList();
+                    }
+                    //}
+                }
+
+                if (cr != null)
+                {
+
+
+                    V_major_max = cr.Select(r => r.V2_Max).Max();
+                    V_major_min = cr.Select(r => r.V2_Min).Min();
+                    M_major_max = cr.Select(r => r.M3_Max).Max();
+                    M_major_min = cr.Select(r => r.M3_Min).Min();
+                    P_max = cr.Select(r => r.P_Max).Max();
+                    P_min = cr.Select(r => r.P_Min).Min();
+                    V_minor_max = cr.Select(r => r.V3_Max).Max();
+                    V_minor_min = cr.Select(r => r.V3_Min).Min();
+                    M_minor_max = cr.Select(r => r.M2_Max).Max();
+                    M_minor_min = cr.Select(r => r.M2_Min).Min();
+                }
+
+            }
+        }
+
+        List<WallComboResult> AllResults;
+
+        
+ 
         private void GetForces()
         {
             try
@@ -491,8 +666,9 @@ namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
                 List<string> comboNames = manager.GetModelComboNames();
                 AvaliableCombos = new ObservableCollection<string>(comboNames);
 
-                List<WallForceResult> r = manager.GetPierForces(SelectedCombo, Entities.Enums.PierPointLocation.Bottom, ModelUnits.kip_in);
-
+                List<WallComboResult> r = manager.GetAllComboPierForces(comboNames, ModelUnits.kip_in);
+                AllResults = r;
+                FindUniquePierNames();
         ////public List<WallForceResult> GetPierForces(string ComboName, PierPointLocation PierPointLocation, ModelUnits ModelUnits)
         //        ErrorMessage = "";
         //        FrameDataExtractor mde = new FrameDataExtractor();
@@ -512,6 +688,16 @@ namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
             {
                 SetDefaultParameters();
                 ErrorMessage = "Data extraction failed. Either ETABS is not running, or results are unavailable for selected Combo.";
+            }
+        }
+
+        private void FindUniquePierNames()
+        {
+            if (AllResults!=null)
+            {
+                //var PierNames = AllResults.Select(p => p.PierName).Distinct().ToList();
+                var PierNames = AllResults.SelectMany(s => s.PierForces).Select(p => p.PierName).Distinct().ToList();
+                AvaliablePiers = AvaliablePiers = new ObservableCollection<string>(PierNames);
             }
         }
 

@@ -86,6 +86,7 @@
     <Compile Include="Entities\Group\GroupData.cs" />
     <Compile Include="Entities\LoadCaseAndCombo\LoadCaseAndComboManager.cs" />
     <Compile Include="Entities\Selection\SelectionManager.cs" />
+    <Compile Include="Entities\Wall\ForceExtraction\Data\WallComboResult.cs" />
     <Compile Include="Entities\Wall\ForceExtraction\Data\WallForceResult.cs" />
     <Compile Include="Entities\Wall\ForceExtraction\Data\WallPointResult.cs" />
     <Compile Include="Entities\Wall\ForceExtraction\PierForceExtractor.cs" />
@@ -106,7 +107,6 @@
   <ItemGroup>
     <Content Include="RefernceLibs\ETABS2015.dll" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

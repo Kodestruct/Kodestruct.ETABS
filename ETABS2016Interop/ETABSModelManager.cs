@@ -7,6 +7,7 @@ using Kodestruct.ETABS.v2016.Interop.Entities.Group;
 using Kodestruct.ETABS.v2016.Interop.Entities.Story;
 using Kodestruct.ETABS.v2016.Interop.Entities.Wall;
 using Kodestruct.ETABS.v2016.Interop.Entities.Wall.ForceExtraction;
+using Kodestruct.ETABS.v2016.Interop.Entities.Wall.ForceExtraction.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,12 +20,30 @@ namespace Kodestruct.ETABS.v2016.Interop
     {
         cSapModel model { get; set; }
 
+        public List<WallComboResult> GetAllComboPierForces( List<string> comboNames, ModelUnits ModelUnits)
+        {
+            PierForceExtractor ext = new PierForceExtractor(model);
+            //List<string> comboNames = this.GetModelComboNames();
+ 
+            List<WallComboResult> combinedList = new List<WallComboResult>();
+            foreach (var comboName in comboNames)
+            {
+                List<WallForceResult> BottomLoc = GetPierForces(comboName, PierPointLocation.Bottom, Interop.ModelUnits.kip_in);
+                List<WallForceResult> BottomTop = GetPierForces(comboName, PierPointLocation.Top, Interop.ModelUnits.kip_in);
+                List<WallForceResult> thisComboResult = BottomLoc.Concat(BottomTop).ToList();
 
+                combinedList.Add(new WallComboResult(comboName, thisComboResult));
+            }
+
+            return combinedList;
+        }
 
         public List<WallForceResult> GetPierForces(string ComboName, PierPointLocation PierPointLocation, ModelUnits ModelUnits)
         {
+            model = ETABSConnection.GetModel();
             PierForceExtractor ext = new PierForceExtractor(model);
-            List<WallForceResult> f = ext.GetPierForces(ComboName, PierPointLocation);
+            List<WallForceResult> f = ext.GetPierForces(ComboName, PierPointLocation, ModelUnits);
+            model = null;
             return f;
         }
 
@@ -32,7 +51,7 @@ namespace Kodestruct.ETABS.v2016.Interop
         {
 
             PierForceExtractor ext = new PierForceExtractor(model);
-            List<WallForceResult> f = ext.GetPierForces(ComboName, PierPointLocation);
+            List<WallForceResult> f = ext.GetPierForces(ComboName, PierPointLocation, ModelUnits);
             var thisPierForces = f.Where(p => p.PierName == PierName).ToList();
             return thisPierForces;
         }

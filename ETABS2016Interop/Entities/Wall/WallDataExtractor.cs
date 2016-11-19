@@ -18,13 +18,13 @@ namespace Kodestruct.ETABS.v2016.Interop.Entities.Wall
             ETABSModel = ETABSConnection.GetModel();
         }
 
-        public List<WallPointResult> GetPierForces(string PierName, string ComboName, List<string> StoryNames, PierPointLocation PierPointLocation)
-        {
-            PierForceExtractor pfe = new PierForceExtractor(ETABSModel);
-            List<WallForceResult> allForces = pfe.GetPierForces(ComboName, PierPointLocation);
-            List<WallForceResult> thisPierForces = allForces.Where(f => f.PierName == PierName).ToList();
-            var res = thisPierForces.Select(r => r.Result).ToList();
-            return res;
-        }
+        //public List<WallPointResult> GetPierForces(string PierName, string ComboName, List<string> StoryNames, PierPointLocation PierPointLocation)
+        //{
+        //    PierForceExtractor pfe = new PierForceExtractor(ETABSModel);
+        //    List<WallForceResult> allForces = pfe.GetPierForces(ComboName, PierPointLocation);
+        //    List<WallForceResult> thisPierForces = allForces.Where(f => f.PierName == PierName).ToList();
+        //    var res = thisPierForces.Select(r => r.Result).ToList();
+        //    return res;
+        //}
     }
 }

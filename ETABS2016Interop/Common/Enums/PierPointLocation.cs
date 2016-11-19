@@ -7,7 +7,8 @@ namespace Kodestruct.ETABS.v2016.Entities.Enums
 {
     public enum PierPointLocation
     {
+        Both,
         Top,
-        Bottom
+        Bottom,
     }
 }

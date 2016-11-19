@@ -1,10 +1,28 @@
 ﻿<UserControl
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:KodestructControls="clr-namespace:Kodestruct.Dynamo.Common.Infra" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     mc:Ignorable="d"  x:Class="Kodestruct.ETABS.v2016.ModelOutput.Wall.PierForceExtractView" Width="600" Height="Auto">
 
-    <Grid>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!--<ResourceDictionary Source="ETABSIcons.xaml"/>-->
+            </ResourceDictionary.MergedDictionaries>
+
+            <KodestructControls:EnumDataCollection x:Key="SelectionItemSource" d:IsDataSource="True">
+                <!--<KodestructControls:EnumDataElement  Icon="{StaticResource IconName}"  EnumString="A" Description="A" />-->
+                <KodestructControls:EnumDataElement    EnumString="Both" Description="Both top and bottom"/>
+                <KodestructControls:EnumDataElement    EnumString="Top" Description="Top" />
+                <KodestructControls:EnumDataElement    EnumString="Bottom" Description="Bottom" />
+            </KodestructControls:EnumDataCollection>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Background="White">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
@@ -12,30 +30,32 @@
             </Grid.RowDefinitions>
             <Grid x:Name="DataSummaryGrid" Grid.Row="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="3*"/>
                     <RowDefinition/>
-                    <RowDefinition Height="3*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <StackPanel Height="40" Margin="0">
-                    <TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,5" Text="Selected combination"/>
-                    <TextBlock x:Name="SelectedcomboTB"  Text="{Binding SelectedCombo}"  Margin="0,5" HorizontalAlignment="Center"/>
+                <StackPanel>
+                    <TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,5" Text="Selected combination" VerticalAlignment="Top" Height="20"/>
+                    <TextBlock x:Name="SelectedcomboTB"  Text="{Binding SelectedCombo}"  Margin="0,5" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                 </StackPanel>
-                <StackPanel Grid.Column="1" Height="40" Margin="0">
-                    <TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,5" Text="Selected  group"/>
-                    <TextBlock x:Name="SelectedgroupTB" TextWrapping="Wrap" Text="{Binding SelectedGroup}"  Margin="0,5" HorizontalAlignment="Center"/>
+                <StackPanel Grid.Column="1">
+                    <TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,5" Text="Selected  pier"/>
+                    <TextBlock x:Name="SelectedpierTB" TextWrapping="Wrap" Text="{Binding SelectedPier}"  Margin="0,5" HorizontalAlignment="Center"/>
                 </StackPanel>
                 <TextBlock Grid.ColumnSpan="2" Grid.Row="1" TextWrapping="Wrap" Text="{Binding ErrorMessage}"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <StackPanel Grid.Column="2">
+                    <TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,5" Text="Selected  story"/>
+                    <TextBlock x:Name="SelectedstoryTB" TextWrapping="Wrap" Text="{Binding SelectedStory}"  Margin="0,5" HorizontalAlignment="Center"/>
+                </StackPanel>
             </Grid>
             <Expander Header="ETABS data selection" VerticalAlignment="Top" IsExpanded="True">
-                <Grid x:Name="DataPreviewGrid" Height="292">
+                <Grid x:Name="DataPreviewGrid" Height="280">
                     <Grid.RowDefinitions>
                         <RowDefinition/>
-                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="70"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -62,21 +82,25 @@
                         <TextBlock TextWrapping="Wrap" Text="Available piers" HorizontalAlignment="Center" Margin="0" Grid.Row="0" VerticalAlignment="Center"/>
                     </Grid>
                     <Grid Grid.Column="2" Margin="6">
-                    	<Grid.RowDefinitions>
-                    		<RowDefinition Height="30"/>
-                    		<RowDefinition Height="1*"/>
-                    	</Grid.RowDefinitions>
-                    	<ListBox x:Name="StoryNames" ItemsSource="{Binding AvailableStories}" SelectedItem="{Binding SelectedStory, Mode=TwoWay}" Grid.Row="1" Height="200" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+                        <ListBox x:Name="StoryNames" ItemsSource="{Binding AvaliableStories, Mode=TwoWay}"  SelectedItem="{Binding SelectedStory, Mode=TwoWay}" Grid.Row="1" Height="200" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
 
-                    	<TextBlock TextWrapping="Wrap" Text="Stories" HorizontalAlignment="Center" Margin="0" Grid.Row="0" VerticalAlignment="Center"/>
+                        <TextBlock TextWrapping="Wrap" Text="Stories" HorizontalAlignment="Center" Margin="0" Grid.Row="0" VerticalAlignment="Center"/>
                     </Grid>
                     <Grid x:Name="ButtonGrid" Grid.ColumnSpan="3" Grid.Row="1">
-                    	<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <!--<Button x:Name="ShowInsertImagesFromScreen" Content="add images from screen" Height="32" Margin="0,8"/>-->
-                            <Button x:Name="Run" Margin="10" Width="70" Content="Run" HorizontalAlignment="Center" VerticalAlignment="Center"
-                    			Command="{Binding GetReactionsCommand}"/>
-                    	</StackPanel>
+                            <Button x:Name="Run" Margin="10" Width="70" Content="Refresh" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    			Command="{Binding GetForcesCommand}"/>
+                        </StackPanel>
                     </Grid>
+
+                    <KodestructControls:EnumControl  HeaderText="Pier output location"  Grid.Column="2" Grid.Row="1"
+                                    ItemsSource="{StaticResource SelectionItemSource}" 
+					DataPath="ReportingPierPointLocation"/>
 
                 </Grid>
             </Expander>

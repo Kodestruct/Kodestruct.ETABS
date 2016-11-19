@@ -21,12 +21,31 @@ namespace Kodestruct.ETABS.v2016.Interop.Entities.Wall.ForceExtraction
 
         }
 
-        public List<WallForceResult> GetPierForces(string ComboName, PierPointLocation PierPointLocation)
+        public List<WallForceResult> GetAllPierForces(List<string> Combonames)
+        {
+            throw new NotImplementedException();
+            //List<WallForceResult> BottomForces = 
+        }
+
+        public List<WallForceResult> GetPierForces(string ComboName, PierPointLocation PierPointLocation, ModelUnits ModelUnits)
         {
             List<WallForceResult> results = new List<WallForceResult>();
 
             EtabsModel.Results.Setup.DeselectAllCasesAndCombosForOutput();
-            
+            switch (ModelUnits)
+            {
+                case ModelUnits.kip_in:
+
+                    EtabsModel.SetPresentUnits(eUnits.kip_in_F);
+                    break;
+                case ModelUnits.kip_ft:
+                    EtabsModel.SetPresentUnits(eUnits.kip_ft_F);
+                    break;
+                default:
+                    EtabsModel.SetPresentUnits(eUnits.kip_in_F);
+                    break;
+            }
+
             var ret1 = EtabsModel.Results.Setup.SetComboSelectedForOutput(ComboName);
  
 
