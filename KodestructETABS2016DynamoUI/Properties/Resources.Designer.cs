@@ -59,5 +59,15 @@ namespace Kodestruct.ETABS.v2016.DynamoUI.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1,2
+        ///.
+        /// </summary>
+        internal static string Temp {
+            get {
+                return ResourceManager.GetString("Temp", resourceCulture);
+            }
+        }
     }
 }

@@ -1,0 +1,151 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="Combination" TargetType="ContentControl">
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Viewbox>
+                        <Canvas x:Name="Combination" Width="42.6667" Height="42.6667" Canvas.Left="0" Canvas.Top="0" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                            <Path Width="11.012" Height="11.024" Canvas.Left="15.9756" Canvas.Top="13.8263" Stretch="Fill" Fill="#FF343433" Data="F1 M 20.5143,24.8503L 20.5143,20.2769L 15.9756,20.2769L 15.9756,18.3663L 20.5143,18.3663L 20.5143,13.8263L 22.4489,13.8263L 22.4489,18.3663L 26.9876,18.3663L 26.9876,20.2769L 22.4489,20.2769L 22.4489,24.8503L 20.5143,24.8503 Z " />
+                            <Rectangle Width="2.33333" Height="2.332" Canvas.Left="5.25333" Canvas.Top="25.212" Stretch="Fill" Fill="#FF343433" />
+                            <Rectangle Width="2.33333" Height="2.332" Canvas.Left="11.7267" Canvas.Top="25.212" Stretch="Fill" Fill="#FF343433" />
+                            <Path Width="13.0227" Height="5.80533" Canvas.Left="3.0984" Canvas.Top="23.8887" Stretch="Fill" Fill="#FF343433" Data="F1 M 16.1211,29.694L 3.0984,29.694L 3.0984,23.8887L 3.76507,23.8887L 3.76507,29.0273L 15.4544,29.0273L 15.4544,23.8887L 16.1211,23.8887L 16.1211,29.694 Z " />
+                            <Rectangle Width="2.33333" Height="2.332" Canvas.Left="29.1427" Canvas.Top="25.212" Stretch="Fill" Fill="#FF343433" />
+                            <Rectangle Width="2.332" Height="2.332" Canvas.Left="35.6173" Canvas.Top="25.212" Stretch="Fill" Fill="#FF343433" />
+                            <Path Width="13.0227" Height="5.80533" Canvas.Left="26.9877" Canvas.Top="23.8887" Stretch="Fill" Fill="#FF343433" Data="F1 M 40.0104,29.694L 26.9877,29.694L 26.9877,23.8887L 27.6544,23.8887L 27.6544,29.0273L 39.3437,29.0273L 39.3437,23.8887L 40.0104,23.8887L 40.0104,29.694 Z " />
+                        </Canvas>
+                    </Viewbox>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="Group" TargetType="ContentControl">
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Viewbox>
+                        <Canvas x:Name="Group" Width="42.6667" Height="42.6667" Canvas.Left="0" Canvas.Top="0" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                            <Path Width="19.7587" Height="19.756" Canvas.Left="7.5096" Canvas.Top="7.56627" Stretch="Fill" Fill="#FF333333" Data="F1 M 24.2643,12.2369C 23.3456,12.2369 22.5963,11.4876 22.5963,10.5689C 22.5963,9.6476 23.3456,8.8996 24.2643,8.8996C 25.1843,8.8996 25.9349,9.6476 25.9349,10.5689C 25.9349,11.4876 25.1843,12.2369 24.2643,12.2369 Z M 10.5109,25.9889C 9.59093,25.9889 8.84293,25.2409 8.84293,24.3209C 8.84293,23.4009 9.59093,22.6529 10.5109,22.6529C 11.4309,22.6529 12.1803,23.4009 12.1803,24.3209C 12.1803,25.2409 11.4309,25.9889 10.5109,25.9889 Z M 24.2643,7.56627C 22.6083,7.56627 21.2629,8.91293 21.2629,10.5689C 21.2629,10.9023 21.3296,11.2169 21.4309,11.5156L 11.4589,21.4876C 11.1603,21.3863 10.8443,21.3196 10.5109,21.3196C 8.85493,21.3196 7.5096,22.6663 7.5096,24.3209C 7.5096,25.9769 8.85493,27.3223 10.5109,27.3223C 12.1669,27.3223 13.5136,25.9769 13.5136,24.3209C 13.5136,23.9876 13.4469,23.6716 13.3469,23.3729L 23.3163,13.4023C 23.6163,13.5023 23.9309,13.5703 24.2643,13.5703C 25.9203,13.5703 27.2683,12.2236 27.2683,10.5689C 27.2683,8.91293 25.9203,7.56627 24.2643,7.56627 Z " />
+                            <Path Width="19.7587" Height="19.7573" Canvas.Left="15.3989" Canvas.Top="15.3436" Stretch="Fill" Fill="#FF333333" Data="F1 M 32.1536,20.0143C 31.2336,20.0143 30.4843,19.2649 30.4843,18.3463C 30.4843,17.4249 31.2336,16.6769 32.1536,16.6769C 33.0736,16.6769 33.8243,17.4249 33.8243,18.3463C 33.8243,19.2649 33.0736,20.0143 32.1536,20.0143 Z M 18.4003,33.7676C 17.4803,33.7676 16.7323,33.0196 16.7323,32.0983C 16.7323,31.1796 17.4803,30.4303 18.4003,30.4303C 19.3203,30.4303 20.0696,31.1796 20.0696,32.0983C 20.0696,33.0196 19.3203,33.7676 18.4003,33.7676 Z M 32.1536,15.3436C 30.4976,15.3436 29.1509,16.6903 29.1509,18.3463C 29.1509,18.6796 29.2189,18.9943 29.3189,19.2943L 19.3483,29.2649C 19.0483,29.1636 18.7336,29.0969 18.4003,29.0969C 16.7443,29.0969 15.3989,30.4436 15.3989,32.0983C 15.3989,33.7556 16.7443,35.1009 18.4003,35.1009C 20.0563,35.1009 21.4029,33.7556 21.4029,32.0983C 21.4029,31.7649 21.3363,31.4489 21.2349,31.1503L 31.2043,21.1796C 31.5056,21.2809 31.8203,21.3476 32.1536,21.3476C 33.8096,21.3476 35.1576,20.0009 35.1576,18.3463C 35.1576,16.6903 33.8096,15.3436 32.1536,15.3436 Z " />
+                            <Path Width="8.508" Height="8.508" Canvas.Left="2.80853" Canvas.Top="2.33373" Stretch="Fill" Fill="#FF333333" Data="F1 M 4.14187,10.8417L 2.80853,10.8417L 2.80853,2.33373L 11.3165,2.33373L 11.3165,3.66707L 4.14187,3.66707L 4.14187,10.8417 Z " />
+                            <Path Width="8.508" Height="8.508" Canvas.Left="2.80907" Canvas.Top="30.7784" Stretch="Fill" Fill="#FF333333" Data="F1 M 11.3171,39.2864L 2.80907,39.2864L 2.80907,30.7784L 4.1424,30.7784L 4.1424,37.9531L 11.3171,37.9531L 11.3171,39.2864 Z " />
+                            <Path Width="8.508" Height="8.508" Canvas.Left="31.3501" Canvas.Top="2.33373" Stretch="Fill" Fill="#FF333333" Data="F1 M 39.8581,10.8417L 38.5248,10.8417L 38.5248,3.66707L 31.3501,3.66707L 31.3501,2.33373L 39.8581,2.33373L 39.8581,10.8417 Z " />
+                            <Path Width="8.508" Height="8.508" Canvas.Left="31.3501" Canvas.Top="30.7784" Stretch="Fill" Fill="#FF333333" Data="F1 M 39.8581,39.2864L 31.3501,39.2864L 31.3501,37.9531L 38.5248,37.9531L 38.5248,30.7784L 39.8581,30.7784L 39.8581,39.2864 Z " />
+                        </Canvas>
+                    </Viewbox>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="Pier" TargetType="ContentControl">
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Viewbox>
+                        <Canvas x:Name="Pier" Width="42.6667" Height="42.6667" Canvas.Left="0" Canvas.Top="0" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                            <Path Width="5.13633" Height="5.11183" Canvas.Left="19.5329" Canvas.Top="5.14137" Stretch="Fill" Fill="#FF333333" Data="F1 M 22.1023,6.45053C 21.7716,6.45053 21.4623,6.57987 21.2276,6.8132C 20.9943,7.04654 20.8663,7.3572 20.8663,7.68653C 20.8663,8.0172 20.9943,8.32653 21.2276,8.55987C 21.7103,9.04253 22.4943,9.04253 22.9756,8.55987C 23.4569,8.0772 23.4569,7.29453 22.9756,6.81187C 22.7423,6.57987 22.4316,6.45053 22.1023,6.45053 Z M 22.1009,10.2532C 21.4436,10.2532 20.7863,10.0039 20.2849,9.50253C 19.7996,9.01854 19.5329,8.3732 19.5329,7.68653C 19.5329,7.0012 19.7996,6.35587 20.2849,5.87054C 21.2556,4.89854 22.9463,4.89854 23.9183,5.8692C 24.9196,6.87054 24.9196,8.49987 23.9183,9.50253C 23.4169,10.0039 22.7596,10.2532 22.1009,10.2532 Z " />
+                            <Path Width="5.13433" Height="5.13467" Canvas.Left="19.5339" Canvas.Top="32.4128" Stretch="Fill" Fill="#FF333333" Data="F1 M 22.1023,33.7448C 21.7849,33.7448 21.4689,33.8661 21.2276,34.1061C 20.7463,34.5888 20.7463,35.3728 21.2276,35.8541C 21.7089,36.3355 22.4929,36.3355 22.9756,35.8541C 23.4556,35.3728 23.4556,34.5875 22.9756,34.1061C 22.7343,33.8661 22.4183,33.7448 22.1023,33.7448 Z M 22.1009,37.5475C 21.4423,37.5475 20.7849,37.2968 20.2849,36.7968C 19.2836,35.7955 19.2836,34.1661 20.2849,33.1635C 21.2863,32.1635 22.9156,32.1621 23.9183,33.1621C 24.9183,34.1648 24.9183,35.7941 23.9183,36.7968C 23.4169,37.2968 22.7596,37.5475 22.1009,37.5475 Z " />
+                            <Path Width="3.972" Height="21.316" Canvas.Left="20.072" Canvas.Top="10.5187" Stretch="Fill" Fill="#FF333333" Data="F1 M 24.044,16.788L 20.072,16.788L 20.072,10.5187L 24.044,10.5187M 24.0427,24.3107L 20.072,24.3107L 20.0733,18.0413L 24.044,18.0413M 24.0427,31.8347L 20.072,31.8347L 20.072,25.5653L 24.0427,25.5653L 24.0427,31.8347 Z " />
+                            <Path Width="8.668" Height="8.668" Canvas.Left="3.16987" Canvas.Top="2.43813" Stretch="Fill" Fill="#FF333333" Data="F1 M 4.5032,11.1061L 3.16987,11.1061L 3.16987,2.43813L 11.8379,2.43813L 11.8379,3.77147L 4.5032,3.77147L 4.5032,11.1061 Z " />
+                            <Path Width="8.668" Height="8.668" Canvas.Left="3.16987" Canvas.Top="31.4492" Stretch="Fill" Fill="#FF333333" Data="F1 M 11.8379,40.1172L 3.16987,40.1172L 3.16987,31.4492L 4.5032,31.4492L 4.5032,38.7839L 11.8379,38.7839L 11.8379,40.1172 Z " />
+                            <Path Width="8.668" Height="8.668" Canvas.Left="32.2799" Canvas.Top="2.43813" Stretch="Fill" Fill="#FF333333" Data="F1 M 40.9479,11.1061L 39.6145,11.1061L 39.6145,3.77147L 32.2799,3.77147L 32.2799,2.43813L 40.9479,2.43813L 40.9479,11.1061 Z " />
+                            <Path Width="8.668" Height="8.668" Canvas.Left="32.2799" Canvas.Top="31.4492" Stretch="Fill" Fill="#FF333333" Data="F1 M 40.9479,40.1172L 32.2799,40.1172L 32.2799,38.7839L 39.6145,38.7839L 39.6145,31.4492L 40.9479,31.4492L 40.9479,40.1172 Z " />
+                        </Canvas>
+                    </Viewbox>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="Story" TargetType="ContentControl">
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Viewbox>
+                        <Canvas x:Name="Story" Width="42.6667" Height="42.6667" Canvas.Left="0" Canvas.Top="0" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                            <Path Width="18.5773" Height="6.80533" Canvas.Left="10.756" Canvas.Top="19.9993" Stretch="Fill" Fill="#FF343433" Data="F1 M 29.3333,26.8047L 26.6667,26.8047L 23.9587,26.8047L 15,26.8047L 13.4227,26.8047L 10.756,26.8047L 10.756,19.9993L 29.3333,19.9993L 29.3333,26.8047 Z " />
+                            <Rectangle Width="30.1667" Height="1.33333" Canvas.Left="5" Canvas.Top="35.7493" Stretch="Fill" Fill="#FF343433" />
+                            <Path Width="18.5773" Height="6.472" Canvas.Left="10.756" Canvas.Top="12.0691" Stretch="Fill" Fill="#FF343433" Data="F1 M 29.3333,18.5411L 28,18.5411L 28,13.4024L 12.0893,13.4024L 12.0893,18.5411L 10.756,18.5411L 10.756,12.0691L 29.3333,12.0691L 29.3333,18.5411 Z " />
+                            <Path Width="18.5773" Height="6.472" Canvas.Left="10.756" Canvas.Top="4.138" Stretch="Fill" Fill="#FF343433" Data="F1 M 29.3333,10.61L 28,10.61L 28,5.47134L 12.0893,5.47134L 12.0893,10.61L 10.756,10.61L 10.756,4.138L 29.3333,4.138L 29.3333,10.61 Z " />
+                            <Path Width="18.5773" Height="6.472" Canvas.Left="10.756" Canvas.Top="12.0691" Stretch="Fill" Fill="#FF343433" Data="F1 M 29.3333,18.5411L 28,18.5411L 28,13.4024L 12.0893,13.4024L 12.0893,18.5411L 10.756,18.5411L 10.756,12.0691L 29.3333,12.0691L 29.3333,18.5411 Z " />
+                            <Path Width="18.5773" Height="6.472" Canvas.Left="10.756" Canvas.Top="28.0411" Stretch="Fill" Fill="#FF343433" Data="F1 M 29.3333,34.5131L 28,34.5131L 28,29.3744L 12.0893,29.3744L 12.0893,34.5131L 10.756,34.5131L 10.756,28.0411L 29.3333,28.0411L 29.3333,34.5131 Z " />
+                        </Canvas>
+                    </Viewbox>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="PierTop" TargetType="ContentControl">
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Viewbox>
+                        <Canvas x:Name="PierTop" Width="42.6667" Height="42.6667" Canvas.Left="0" Canvas.Top="0" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                            <Rectangle Width="28.6667" Height="17.1107" Canvas.Left="7" Canvas.Top="12.7787" Stretch="Fill" StrokeThickness="1.33333" StrokeLineJoin="Round" Stroke="#FF343433" />
+                            <Path Width="9.58267" Height="9.584" Canvas.Left="16.5424" Canvas.Top="8.65267" Stretch="Fill" Fill="#FF343433" Data="F1 M 26.1251,13.4447C 26.1251,16.09 23.9797,18.2367 21.3331,18.2367C 18.6864,18.2367 16.5424,16.09 16.5424,13.4447C 16.5424,10.798 18.6864,8.65267 21.3331,8.65267C 23.9797,8.65267 26.1251,10.798 26.1251,13.4447 Z " />
+                        </Canvas>
+                    </Viewbox>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="PierBottom" TargetType="ContentControl">
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Viewbox>
+                        <Canvas x:Name="PierBottom" Width="42.6667" Height="42.6667" Canvas.Left="0" Canvas.Top="0" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                            <Rectangle Width="28.6667" Height="17.1107" Canvas.Left="7" Canvas.Top="12.7787" Stretch="Fill" StrokeThickness="1.33333" StrokeLineJoin="Round" Stroke="#FF343433" />
+                            <Path Width="9.58267" Height="9.584" Canvas.Left="16.5424" Canvas.Top="24.4307" Stretch="Fill" Fill="#FF343433" Data="F1 M 26.1251,29.2227C 26.1251,31.868 23.9797,34.0147 21.3331,34.0147C 18.6864,34.0147 16.5424,31.868 16.5424,29.2227C 16.5424,26.576 18.6864,24.4307 21.3331,24.4307C 23.9797,24.4307 26.1251,26.576 26.1251,29.2227 Z " />
+                        </Canvas>
+                    </Viewbox>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="PierBoth" TargetType="ContentControl">
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Viewbox>
+                        <Canvas x:Name="PierBoth" Width="42.6667" Height="42.6667" Canvas.Left="0" Canvas.Top="0" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                            <Rectangle Width="28.6667" Height="17.1107" Canvas.Left="7" Canvas.Top="12.7787" Stretch="Fill" StrokeThickness="1.33333" StrokeLineJoin="Round" Stroke="#FF343433" />
+                            <Path Width="9.58267" Height="9.584" Canvas.Left="16.5424" Canvas.Top="24.4307" Stretch="Fill" Fill="#FF343433" Data="F1 M 26.1251,29.2227C 26.1251,31.868 23.9797,34.0147 21.3331,34.0147C 18.6864,34.0147 16.5424,31.868 16.5424,29.2227C 16.5424,26.576 18.6864,24.4307 21.3331,24.4307C 23.9797,24.4307 26.1251,26.576 26.1251,29.2227 Z " />
+                            <Path Width="9.58267" Height="9.584" Canvas.Left="16.5424" Canvas.Top="8.65267" Stretch="Fill" Fill="#FF343433" Data="F1 M 26.1251,13.4447C 26.1251,16.09 23.9797,18.2367 21.3331,18.2367C 18.6864,18.2367 16.5424,16.09 16.5424,13.4447C 16.5424,10.798 18.6864,8.65267 21.3331,8.65267C 23.9797,8.65267 26.1251,10.798 26.1251,13.4447 Z " />
+                        </Canvas>
+                    </Viewbox>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="Refresh" TargetType="ContentControl">
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Viewbox>
+                        <Canvas x:Name="Refresh" Width="42.6667" Height="42.6667" Canvas.Left="0" Canvas.Top="0" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                            <Path Width="28.652" Height="16.936" Canvas.Left="2.50893" Canvas.Top="12.6635" Stretch="Fill" Fill="#FF333333" Data="F1 M 22.0703,12.6635L 31.1609,21.6581L 22.0703,29.5995L 22.0703,25.3781C 22.0703,25.3781 6.42627,21.1315 2.50893,29.5995C 2.50893,27.5021 3.9116,16.9101 22.0703,16.9101L 22.0703,12.6635 Z " />
+                            <Path Width="26.132" Height="26.1907" Canvas.Left="11.8687" Canvas.Top="8.23827" Stretch="Fill" Fill="#FF333333" Data="F1 M 32.8633,8.23827L 17.006,8.23827C 14.1993,8.23827 11.8687,10.5449 11.8687,13.3849L 11.8687,16.9343C 12.614,16.6876 13.4047,16.4649 14.2553,16.2756L 14.2553,13.3849C 14.2553,11.8396 15.462,10.6009 17.006,10.6009L 32.8633,10.6009C 34.4087,10.6009 35.6433,11.8396 35.6433,13.3849L 35.6433,29.2823C 35.6433,30.8289 34.4087,32.0369 32.8633,32.0369L 17.006,32.0369C 15.462,32.0369 14.2553,30.8289 14.2553,29.2823L 14.2553,25.7303C 14.0833,25.7289 13.914,25.7209 13.7407,25.7209C 13.086,25.7209 12.4633,25.7449 11.8687,25.7916L 11.8687,29.2823C 11.8687,32.0969 14.1993,34.4289 17.006,34.4289L 32.8633,34.4289C 35.698,34.4289 38.0007,32.0969 38.0007,29.2823L 38.0007,13.3849C 38.0007,10.5449 35.698,8.23827 32.8633,8.23827 Z " />
+                            <Rectangle Width="6.93867" Height="1.56667" Canvas.Left="27.164" Canvas.Top="15.1333" Stretch="Fill" Fill="#FF333333" />
+                            <Rectangle Width="3.11734" Height="1.56667" Canvas.Left="30.988" Canvas.Top="19.4867" Stretch="Fill" Fill="#FF333333" />
+                            <Rectangle Width="4.05333" Height="1.568" Canvas.Left="30.0493" Canvas.Top="23.8373" Stretch="Fill" Fill="#FF333333" />
+                        </Canvas>
+                    </Viewbox>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="Run" TargetType="ContentControl">
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Viewbox>
+                        <Canvas x:Name="Run" Width="42.6667" Height="42.6667" Canvas.Left="0" Canvas.Top="0" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                            <Path Width="26.7387" Height="26.7973" Canvas.Left="7.964" Canvas.Top="6.98" Stretch="Fill" Fill="#FF333333" Data="F1 M 30.8387,15.9227L 11.8267,15.9227L 11.8267,10.8653L 30.8387,10.8653M 30.8387,23.3813L 26.5067,23.3813L 26.5067,19.0507L 30.8387,19.0507M 30.8387,30.3013L 26.5067,30.3013L 26.5067,25.9693L 30.8387,25.9693M 23.4973,23.3813L 19.1667,23.3813L 19.1667,19.0507L 23.4973,19.0507M 23.4973,30.3013L 19.1667,30.3013L 19.1667,25.9693L 23.4973,25.9693M 16.1587,23.3813L 11.8267,23.3813L 11.8267,19.0507L 16.1587,19.0507M 16.1587,30.3013L 11.8267,30.3013L 11.8267,25.9693L 16.1587,25.9693M 29.4453,6.98L 13.2213,6.98C 10.348,6.98 7.964,9.34134 7.964,12.2467L 7.964,28.5133C 7.964,31.392 10.348,33.7773 13.2213,33.7773L 29.4453,33.7773C 32.348,33.7773 34.7027,31.392 34.7027,28.5133L 34.7027,12.2467C 34.7027,9.34134 32.348,6.98 29.4453,6.98 Z " />
+                        </Canvas>
+                    </Viewbox>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
