@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Kodestruct.ETABS.v2016.Interop</RootNamespace>
-    <AssemblyName>Kodestruct.ETABS.v2016.Interop</AssemblyName>
+    <AssemblyName>KodestructETABSv2016Interop</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

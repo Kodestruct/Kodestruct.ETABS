@@ -24,7 +24,7 @@ using Kodestruct.ETABS.v2016.Interop.Entities.Wall.ForceExtraction.Data;
 using Kodestruct.ETABS.v2016.Entities.Enums;
 
 
-namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
+namespace Kodestruct.ETABS.v2016.ModelOutput.Wall
 {
 
     /// <summary>
@@ -65,7 +65,9 @@ namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
 
         private void SetDefaultParameters()
         {
-
+            SelectedPier = "Select pier from list";
+            SelectedCombo = "Select combination from list";
+            SelectedStory = "Select story from list";
             //Story = null;
             //V_major_max = null;
             //V_major_min = null;
@@ -520,20 +522,18 @@ namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
         protected override void SerializeCore(XmlElement nodeElement, SaveContext context)
         {
             base.SerializeCore(nodeElement, context);
-
-            //nodeElement.SetAttribute("V_major_max", V_major_max.ToString());
-            //nodeElement.SetAttribute("V_major_min", V_major_min.ToString());
-            //nodeElement.SetAttribute("M_major_max", M_major_max.ToString());
-            //nodeElement.SetAttribute("M_major_min", M_major_min.ToString());
-            //nodeElement.SetAttribute("P_max", P_max.ToString());
-            //nodeElement.SetAttribute("P_min", P_min.ToString());
-            //nodeElement.SetAttribute("V_minor_max", V_minor_max.ToString());
-            //nodeElement.SetAttribute("V_minor_min", V_minor_min.ToString());
-            //nodeElement.SetAttribute("M_minor_max", M_minor_max.ToString());
-            //nodeElement.SetAttribute("M_minor_min", M_minor_min.ToString());
-
-
-            //nodeElement.SetAttribute("SelectedCombo", SelectedCombo);
+            nodeElement.SetAttribute("Story", Story);
+            nodeElement.SetAttribute("V_major_max", V_major_max.ToString());
+            nodeElement.SetAttribute("V_major_min", V_major_min.ToString());
+            nodeElement.SetAttribute("M_major_max", M_major_max.ToString());
+            nodeElement.SetAttribute("M_major_min", M_major_min.ToString());
+            nodeElement.SetAttribute("P_max", P_max.ToString());
+            nodeElement.SetAttribute("P_min", P_min.ToString());
+            nodeElement.SetAttribute("V_minor_max", V_minor_max.ToString());
+            nodeElement.SetAttribute("V_minor_min", V_minor_min.ToString());
+            nodeElement.SetAttribute("M_minor_max", M_minor_max.ToString());
+            nodeElement.SetAttribute("M_minor_min", M_minor_min.ToString());
+            nodeElement.SetAttribute("SelectedCombo", SelectedCombo);
 
         }
 
@@ -544,20 +544,21 @@ namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
         {
             base.DeserializeCore(nodeElement, context);
 
+            var attrS = nodeElement.Attributes["Story"]; SelectedCombo = attrS.Value;
 
-            //var attribV_major_max = nodeElement.Attributes["V_major_max"]; V_major_max = Double.Parse(attribV_major_max.Value);
-            //var attribV_major_min = nodeElement.Attributes["V_major_min"]; V_major_min = Double.Parse(attribV_major_min.Value);
-            //var attribM_major_max = nodeElement.Attributes["M_major_max"]; M_major_max = Double.Parse(attribM_major_max.Value);
-            //var attribM_major_min = nodeElement.Attributes["M_major_min"]; M_major_min = Double.Parse(attribM_major_min.Value);
-            //var attribP_max = nodeElement.Attributes["P_max"]; P_max = Double.Parse(attribP_max.Value);
-            //var attribP_min = nodeElement.Attributes["P_min"]; P_min = Double.Parse(attribP_min.Value);
-            //var attribV_minor_max = nodeElement.Attributes["V_minor_max"]; V_minor_max = Double.Parse(attribV_minor_max.Value);
-            //var attribV_minor_min = nodeElement.Attributes["V_minor_min"]; V_minor_min = Double.Parse(attribV_minor_min.Value);
+            var attribV_major_max = nodeElement.Attributes["V_major_max"]; V_major_max = Double.Parse(attribV_major_max.Value);
+            var attribV_major_min = nodeElement.Attributes["V_major_min"]; V_major_min = Double.Parse(attribV_major_min.Value);
+            var attribM_major_max = nodeElement.Attributes["M_major_max"]; M_major_max = Double.Parse(attribM_major_max.Value);
+            var attribM_major_min = nodeElement.Attributes["M_major_min"]; M_major_min = Double.Parse(attribM_major_min.Value);
+            var attribP_max = nodeElement.Attributes["P_max"]; P_max = Double.Parse(attribP_max.Value);
+            var attribP_min = nodeElement.Attributes["P_min"]; P_min = Double.Parse(attribP_min.Value);
+            var attribV_minor_max = nodeElement.Attributes["V_minor_max"]; V_minor_max = Double.Parse(attribV_minor_max.Value);
+            var attribV_minor_min = nodeElement.Attributes["V_minor_min"]; V_minor_min = Double.Parse(attribV_minor_min.Value);
 
-            //var attribM_minor_max = nodeElement.Attributes["M_minor_max"]; M_minor_max = Double.Parse(attribM_minor_max.Value);
-            //var attribM_minor_min = nodeElement.Attributes["M_minor_min"]; M_minor_min = Double.Parse(attribM_minor_min.Value);
+            var attribM_minor_max = nodeElement.Attributes["M_minor_max"]; M_minor_max = Double.Parse(attribM_minor_max.Value);
+            var attribM_minor_min = nodeElement.Attributes["M_minor_min"]; M_minor_min = Double.Parse(attribM_minor_min.Value);
 
-            //var attrSC = nodeElement.Attributes["SelectedCombo"]; SelectedCombo = attrSC.Value;
+            var attrSC = nodeElement.Attributes["SelectedCombo"]; SelectedCombo = attrSC.Value;
 
 
 

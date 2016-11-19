@@ -13,7 +13,7 @@
         </ResourceDictionary>
 	</UserControl.Resources>
 	
-	<Grid Background="White">
+	<Grid>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>

@@ -65,6 +65,9 @@ namespace Kodestruct.ETABS.v2016.ModelOutput.Frame
 
         private void SetDefaultParameters()
         {
+
+            SelectedCombo = "Select combination from list";
+            SelectedGroup = "Select group from list";
             V_major_max = 0.0;
             V_major_min = 0.0;
             M_major_max = 0.0;
