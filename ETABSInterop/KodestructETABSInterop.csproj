@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BF8119CD-6D81-4A6E-BE18-2D7702DF2665}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Kodestruct.ETABS.Interop</RootNamespace>
+    <AssemblyName>KodestructETABSInterop</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ETABS2016">
+      <HintPath>RefernceLibs\ETABS2016.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\Enums\PierPointLocation.cs" />
+    <Compile Include="Common\Lists\ArrayToListConverter.cs" />
+    <Compile Include="Common\Lists\ListFactory.cs" />
+    <Compile Include="Common\Math\Distance.cs" />
+    <Compile Include="Common\Math\Interpolation.cs" />
+    <Compile Include="Common\Math\MinMax.cs" />
+    <Compile Include="Common\Math\MinMaxBy.cs" />
+    <Compile Include="Common\Math\Point2D.cs" />
+    <Compile Include="Common\Math\Point3D.cs" />
+    <Compile Include="Common\Math\PointTools.cs" />
+    <Compile Include="Common\Math\Vector.cs" />
+    <Compile Include="Common\Enums\ArrayToListConverter.cs" />
+    <Compile Include="Common\Enums\ForceType.cs" />
+    <Compile Include="Common\Enums\ForceValueFilterType.cs" />
+    <Compile Include="Common\Enums\ModelUnits.cs" />
+    <Compile Include="Common\Enums\ReactionType.cs" />
+    <Compile Include="Common\Enums\FrameDistributedLoadDirection.cs" />
+    <Compile Include="Common\Enums\EtabsMemberType.cs" />
+    <Compile Include="Common\Enums\EtabsSectionType.cs" />
+    <Compile Include="Common\Enums\StationType.cs" />
+    <Compile Include="Common\Results\ForceResult.cs" />
+    <Compile Include="Common\Results\PointResult.cs" />
+    <Compile Include="Entities\Frame\EtabsFrame.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entities\Frame\EtabsLine.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entities\Frame\ForceExtraction\Data\FrameForceResult.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entities\Story\StoryManager.cs" />
+    <Compile Include="Entities\Wall\EtabsPier.cs" />
+    <Compile Include="Entities\Frame\ForceExtraction\DataFile\DataFileManager.cs" />
+    <Compile Include="Entities\Frame\ForceExtraction\Data\FrameEnvelopeForceResult.cs" />
+    <Compile Include="Entities\Frame\ForceExtraction\Data\FrameEnvelopeReactionResult.cs" />
+    <Compile Include="Entities\Frame\ForceExtraction\Data\FramePointResult.cs" />
+    <Compile Include="Entities\Frame\ForceExtraction\Data\FrameReactionResult.cs" />
+    <Compile Include="Entities\Frame\FrameDataExtractor.cs" />
+    <Compile Include="Entities\Group\GroupData.cs" />
+    <Compile Include="Entities\LoadCaseAndCombo\LoadCaseAndComboManager.cs" />
+    <Compile Include="Entities\Selection\SelectionManager.cs" />
+    <Compile Include="Entities\Wall\ForceExtraction\Data\WallComboResult.cs" />
+    <Compile Include="Entities\Wall\ForceExtraction\Data\WallForceResult.cs" />
+    <Compile Include="Entities\Wall\ForceExtraction\Data\WallPointResult.cs" />
+    <Compile Include="Entities\Wall\ForceExtraction\PierForceExtractor.cs" />
+    <Compile Include="Entities\Wall\PierManager.cs" />
+    <Compile Include="Entities\Wall\WallDataExtractor.cs" />
+    <Compile Include="ETABSModelManager.cs" />
+    <Compile Include="Entities\Frame\ForceExtraction\FrameForceExtractor.cs" />
+    <Compile Include="Entities\Frame\Loads\SapFrameDistributedLoad.cs" />
+    <Compile Include="Entities\Group\GroupManager.cs" />
+    <Compile Include="Common\Interfaces\IEtabsElement.cs" />
+    <Compile Include="Entities\Point\EtabsNode.cs" />
+    <Compile Include="Entities\Point\EtabsPoint.cs" />
+    <Compile Include="Entities\Results\FrameForceResult.cs" />
+    <Compile Include="ETABS\ETABSConnection.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Entities\Selection\SelectionManagerFrames.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="RefernceLibs\ETABS2015.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
