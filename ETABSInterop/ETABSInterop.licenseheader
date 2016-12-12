@@ -1,4 +1,6 @@
-﻿#region Copyright
+﻿extensions: designer.cs generated.cs
+extensions: .cs
+#region Copyright
    /*Copyright (C) 2015 Konstantin Udilovich
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,34 +17,7 @@
    */
 #endregion
  
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Kodestruct.ETABS.Interop.Common.Mathematics
-{
-    public class Point2D
-    {
-        public string Name { get; set; }
-        public double X { get; set; }
-        public double Y { get; set; }
-        
-        public Point2D()
-        {
-
-        }
-
-        public Point2D(string Name, double X, double Y)
-        {
-            this.Name = Name;
-            this.X = X;
-            this.Y = Y;
-        }
-
-        public Point2D(double X, double Y): this("", X,Y)
-        {
-
-        }
-    }
-}
+extensions:  .xml .config .xsd
+<!--
+	Copyright (C) 2015 Konstantin Udilovich
+-->
