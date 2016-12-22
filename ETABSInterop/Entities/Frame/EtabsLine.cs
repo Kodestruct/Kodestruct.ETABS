@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ETABS2016;
 
 
 namespace Kodestruct.ETABS.Interop.Entities.Frame
@@ -40,6 +41,9 @@ namespace Kodestruct.ETABS.Interop.Entities.Frame
         public EtabsSectionType SectionType { get; set; }
         public List<SapFrameDistributedLoad> Loads { get; set; }
 
+
+        protected cSapModel EtabsModel {get; set;}
+
         #region LengthProperty
         private double length;
 
@@ -47,14 +51,27 @@ namespace Kodestruct.ETABS.Interop.Entities.Frame
         {
             get
             {
-
+                if (this.StartNode == null || this.EndNode == null)
+                {
+                    GetNodes();
+                }
                 EtabsNode i = this.StartNode;
                 EtabsNode j = this.EndNode;
-                Distance dist = new Distance(new Point3D(i.X, i.Y, i.Z), new Point3D(i.X, j.Y, j.Z));
+                Distance dist = new Distance(new Point3D(i.X, i.Y, i.Z), new Point3D(j.X, j.Y, j.Z));
                 return dist.AbsoluteDistance;
 
             }
 
+        }
+
+        private void GetNodes()
+        {
+            string PI_Name=null;
+            string PJ_Name = null;
+
+            int ret = EtabsModel.FrameObj.GetPoints(this.Name, ref PI_Name, ref PJ_Name);
+            this.StartNode = new EtabsNode(EtabsModel, PI_Name);
+            this.EndNode = new EtabsNode(EtabsModel, PJ_Name);
         }
         #endregion
 
@@ -77,16 +94,18 @@ namespace Kodestruct.ETABS.Interop.Entities.Frame
         #endregion
 
 
-        public EtabsLine(string Name)
+        public EtabsLine(string Name, cSapModel EtabsModel)
         {
             this.Name = Name;
+            this.EtabsModel = EtabsModel;
         }
 
-        public EtabsLine(string Name, EtabsNode StartNode, EtabsNode EndNode)
+        public EtabsLine(string Name, cSapModel EtabsModel, EtabsNode StartNode, EtabsNode EndNode)
         {
             this.Name = Name;
             this.StartNode = StartNode;
             this.EndNode = EndNode;
+            this.EtabsModel = EtabsModel;
         }
     }
 }

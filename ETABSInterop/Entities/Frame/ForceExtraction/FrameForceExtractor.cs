@@ -90,6 +90,30 @@ namespace Kodestruct.ETABS.Interop.Entities.Frame.ForceExtraction
             return thisSelectionEnvelopeResult;
         }
 
+        public FrameEnvelopeForceResult GetFrameForcesAtStationRatio(List<string> FrameNames, string ComboName, ModelUnits ModelUnits, double StationRatio)
+        {
+            //Set Units
+            switch (ModelUnits)
+            {
+                case ModelUnits.kip_in:
+
+                    EtabsModel.SetPresentUnits(eUnits.kip_in_F);
+                    break;
+                case ModelUnits.kip_ft:
+                    EtabsModel.SetPresentUnits(eUnits.kip_ft_F);
+                    break;
+                default:
+                    EtabsModel.SetPresentUnits(eUnits.kip_in_F);
+                    break;
+            }
+
+
+            FrameForceResult thisSelectionResult = GetEnvelopeForceResultForMultipleFrames(FrameNames, ComboName, StationRatio);
+            FrameEnvelopeForceResult thisSelectionEnvelopeResult = new FrameEnvelopeForceResult(null, thisSelectionResult);
+
+            return thisSelectionEnvelopeResult;
+        }
+
         public FrameEnvelopeForceResult GetFrameForces(List<string> FrameNames, string ComboName, ModelUnits ModelUnits)
         {
             //Set Units
@@ -141,6 +165,53 @@ namespace Kodestruct.ETABS.Interop.Entities.Frame.ForceExtraction
             return thisSelectionEnvelopeResult;
 
         }
+
+        private FrameForceResult GetEnvelopeForceResultForMultipleFrames(List<string> FrameNames, string ComboName, double StationRatio)
+        {
+            List<FrameForceResult> results = new List<FrameForceResult>();
+
+            foreach (var frm in FrameNames)
+            {
+                EtabsFrame thisFrame = new EtabsFrame(frm, this.EtabsModel);
+                var thisResult = thisFrame.GetForces(ComboName, StationRatio);
+                results.Add(thisResult);
+            }
+
+
+            //FindMaximums
+            double MomentMajorMax = results.Max(f => f.MomentMajorMax);
+            double MomentMajorMin = results.Min(f => f.MomentMajorMin);
+            double MomentMinorMax = results.Max(f => f.MomentMinorMax);
+            double MomentMinorMin = results.Min(f => f.MomentMinorMin);
+            double ShearMajorMax = results.Max(f => f.ShearMajorMax);
+            double ShearMajorMin = results.Min(f => f.ShearMajorMin);
+            double ShearMinorMax = results.Max(f => f.ShearMinorMax);
+            double ShearMinorMin = results.Min(f => f.ShearMinorMin);
+            double TorsionMax = results.Max(f => f.TorsionMax);
+            double TorsionMin = results.Min(f => f.TorsionMin);
+            double AxialForceMax = results.Max(f => f.AxialForceMax);
+            double AxialForceMin = results.Min(f => f.AxialForceMin);
+
+            FrameForceResult envelopeResult = new FrameForceResult()
+            {
+                MomentMajorMax = MomentMajorMax,
+                MomentMajorMin = MomentMajorMin,
+                MomentMinorMax = MomentMinorMax,
+                MomentMinorMin = MomentMinorMin,
+                ShearMajorMax = ShearMajorMax,
+                ShearMajorMin = ShearMajorMin,
+                ShearMinorMax = ShearMinorMax,
+                ShearMinorMin = ShearMinorMin,
+                TorsionMax = TorsionMax,
+                TorsionMin = TorsionMin,
+                AxialForceMax = AxialForceMax,
+                AxialForceMin = AxialForceMin
+            };
+
+            return envelopeResult;
+        }
+
+
         private FrameForceResult GetEnvelopeForceResultForMultipleFrames(List<string> FrameNames, string ComboName)
         {
 

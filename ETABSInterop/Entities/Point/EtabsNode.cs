@@ -14,7 +14,8 @@
    limitations under the License.
    */
 #endregion
- 
+
+using ETABS2016;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,8 @@ namespace Kodestruct.ETABS.Interop.Entities.Point
 {
     public class EtabsNode : EtabsPoint
     {
+        protected cSapModel EtabsModel { get; set; }
+
 
         public EtabsNode(string Name,
         double X,
@@ -33,6 +36,21 @@ namespace Kodestruct.ETABS.Interop.Entities.Point
         )
             : base(Name, X, Y, Z)
         {
+        }
+
+        public EtabsNode(cSapModel EtabsModel, string Name)
+            : base(Name)
+        {
+            this.EtabsModel = EtabsModel;
+
+            double _X=0;
+            double _Y=0;
+            double _Z = 0; 
+
+            EtabsModel.PointObj.GetCoordCartesian(Name, ref _X, ref _Y, ref _Z);
+             X =_X ;
+             Y =_Y ;
+             Z =_Z ;
         }
     }
 }

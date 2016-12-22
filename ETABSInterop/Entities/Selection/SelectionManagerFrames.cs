@@ -37,7 +37,7 @@ namespace Kodestruct.ETABS.Interop.Selection
 
             foreach (var name in apSelectionNames)
             {
-                     EtabsLine sapLine = new EtabsLine(name);
+                    EtabsLine sapLine = new EtabsLine(name,Model);
                     sapLineList.Add(sapLine);
             }
 

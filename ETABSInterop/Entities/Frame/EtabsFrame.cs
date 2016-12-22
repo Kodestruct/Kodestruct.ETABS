@@ -14,9 +14,10 @@
    limitations under the License.
    */
 #endregion
- 
+
 using ETABS2016;
 using Kodestruct.ETABS.Interop.Common.Lists;
+using Kodestruct.ETABS.Interop.Common.Mathematics;
 using Kodestruct.ETABS.Interop.Entities.Enums;
 using Kodestruct.ETABS.Interop.Entities.Frame.ForceExtraction;
 using System;
@@ -29,12 +30,12 @@ namespace Kodestruct.ETABS.Interop.Entities.Frame
 {
     public partial class EtabsFrame : EtabsLine
     {
-        cSapModel EtabsModel;
 
-        public EtabsFrame(string Name, cSapModel EtabsModel): base(null)
+
+        public EtabsFrame(string Name, cSapModel EtabsModel)
+            : base(Name, EtabsModel)
         {
-            this.EtabsModel = EtabsModel;
-            this.Name = Name;
+
         }
 
         public FrameForceResult GetForces(string ComboName)
@@ -57,9 +58,34 @@ namespace Kodestruct.ETABS.Interop.Entities.Frame
                     TorsionMin = GetMinimumForce(ComboName, ForceType.Mx).ResultValue
 
                 };
-            
 
+        }
+        /// <summary>
+        /// Gets frame forces at a loacation, specified as ratio of station to overall length
+        /// </summary>
+        /// <param name="ComboName"></param>
+        /// <param name="StationRatio">Ratio of station to overall length</param>
+        /// <returns></returns>
+        public FrameForceResult GetForces(string ComboName, double StationRatio)
+        {
 
+            return new FrameForceResult()
+            {
+
+                AxialForceMax = GetMaximumForceAtStationRatio(ComboName, ForceType.Fx, StationRatio).ResultValue,
+                AxialForceMin = GetMinimumForceAtStationRatio(ComboName, ForceType.Fx, StationRatio).ResultValue,
+                MomentMajorMax = GetMaximumForceAtStationRatio(ComboName, ForceType.Mz, StationRatio).ResultValue,
+                MomentMajorMin = GetMinimumForceAtStationRatio(ComboName, ForceType.Mz, StationRatio).ResultValue,
+                MomentMinorMax = GetMaximumForceAtStationRatio(ComboName, ForceType.My, StationRatio).ResultValue,
+                MomentMinorMin = GetMinimumForceAtStationRatio(ComboName, ForceType.My, StationRatio).ResultValue,
+                ShearMajorMax = GetMaximumForceAtStationRatio(ComboName, ForceType.Fy, StationRatio).ResultValue,
+                ShearMajorMin = GetMinimumForceAtStationRatio(ComboName, ForceType.Fy, StationRatio).ResultValue,
+                ShearMinorMax = GetMaximumForceAtStationRatio(ComboName, ForceType.Fz, StationRatio).ResultValue,
+                ShearMinorMin = GetMinimumForceAtStationRatio(ComboName, ForceType.Fz, StationRatio).ResultValue,
+                TorsionMax = GetMaximumForceAtStationRatio(ComboName, ForceType.Mx, StationRatio).ResultValue,
+                TorsionMin = GetMinimumForceAtStationRatio(ComboName, ForceType.Mx, StationRatio).ResultValue
+
+            };
 
         }
 
@@ -129,6 +155,65 @@ namespace Kodestruct.ETABS.Interop.Entities.Frame
 
             return result;
 
+        }
+
+
+        public FramePointResult GetMaximumForceAtStationRatio(string ComboName, ForceType ForceType, double StationRatio)
+        {
+
+            double StationValue = this.Length * StationRatio;
+
+
+            FramePointResult result = new FramePointResult();
+
+            List<FramePointResult> FrameResults = GetFrameForceList(ComboName, ForceType);
+            List<double> distinctStations = FrameResults.Select(r => r.Station).Distinct().ToList();
+
+
+            double closestStation1 = distinctStations.OrderBy(item => Math.Abs(StationValue - item)).ToList()[0];
+            double closestStation2 = distinctStations.OrderBy(item => Math.Abs(StationValue - item)).ToList()[1];
+
+            var Value1List = FrameResults.Where(r => r.Station == closestStation1).ToList();
+            var Value2List = FrameResults.Where(r => r.Station == closestStation2).ToList();
+
+            var Value1 = Value1List.Max(v => v.ResultValue);
+            var Value2 = Value2List.Max(v => v.ResultValue);
+
+            double ResultVal = Interpolation.InterpolateLinear(closestStation1, Value1, closestStation2, Value2, StationValue);
+
+            result.ResultValue = ResultVal;
+            result.Station = StationValue;
+
+            return result;
+        }
+
+        public FramePointResult GetMinimumForceAtStationRatio(string ComboName, ForceType ForceType, double StationRatio)
+        {
+
+            double StationValue = this.Length * StationRatio;
+
+
+            FramePointResult result = new FramePointResult();
+
+            List<FramePointResult> FrameResults = GetFrameForceList(ComboName, ForceType);
+            List<double> distinctStations = FrameResults.Select(r => r.Station).Distinct().ToList();
+
+
+            double closestStation1 = distinctStations.OrderBy(item => Math.Abs(StationValue - item)).ToList()[0];
+            double closestStation2 = distinctStations.OrderBy(item => Math.Abs(StationValue - item)).ToList()[1];
+
+            var Value1List = FrameResults.Where(r => r.Station == closestStation1).ToList();
+            var Value2List = FrameResults.Where(r => r.Station == closestStation2).ToList();
+
+            var Value1 = Value1List.Min(v => v.ResultValue);
+            var Value2 = Value2List.Min(v => v.ResultValue);
+
+            double ResultVal = Interpolation.InterpolateLinear(closestStation1, Value1, closestStation2, Value2, StationValue);
+
+            result.ResultValue = ResultVal;
+            result.Station = StationValue;
+
+            return result;
         }
 
         public FramePointResult GetMaximumForce( string ComboName, ForceType ForceType, double Station)

@@ -35,6 +35,7 @@ using Kodestruct.ETABS.Interop;
 using System.Collections.ObjectModel;
 using Kodestruct.ETABS.Interop.Entities.Frame.ForceExtraction;
 using Kodestruct.ETABS.Interop.Entities.Frame;
+using System.ComponentModel;
 
 
 namespace Kodestruct.ETABS.ModelOutput.Frame
@@ -48,7 +49,7 @@ namespace Kodestruct.ETABS.ModelOutput.Frame
     [NodeCategory("Kodestruct.ETABS.ModelOutput.Frame")]
     [NodeDescription("Extract envelope frame forces for selected elements")]
     [IsDesignScriptCompatible]
-    public class SelectionForceExtract : UiNodeBase
+    public class SelectionForceExtract : UiNodeBase, IDataErrorInfo
     {
 
         public SelectionForceExtract()
@@ -80,7 +81,8 @@ namespace Kodestruct.ETABS.ModelOutput.Frame
         {
             SelectedCombo = "Select combination from list";
 
-
+            SpecifyStation = false;
+            StationRatio = 0.5;
                 V_major_max  =0.0;
                 V_major_min =0.0;
                 M_major_max  =0.0;
@@ -169,6 +171,45 @@ namespace Kodestruct.ETABS.ModelOutput.Frame
         #endregion
 
 
+        #region SpecifyStationProperty
+		
+		/// <summary>
+		/// SpecifyStation property
+		/// </summary>
+		/// <value>SpecifyStation</value>
+		public bool _SpecifyStation;
+		
+		public bool SpecifyStation
+		{
+            get { return _SpecifyStation; }
+		    set
+		    {
+		        _SpecifyStation= value;
+		        RaisePropertyChanged("SpecifyStation");
+		        //OnNodeModified(true); 
+		    }
+		}
+		#endregion
+
+        #region StationRatioProperty
+		
+		/// <summary>
+		/// StationRatio property
+		/// </summary>
+		/// <value>StationRatio</value>
+		public double _StationRatio;
+		
+		public double StationRatio
+		{
+		    get { return _StationRatio; }
+		    set
+		    {
+		        _StationRatio= value;
+		        RaisePropertyChanged("StationRatio");
+		        //OnNodeModified(true); 
+		    }
+		}
+		#endregion
 
 	    #endregion
 
@@ -397,8 +438,8 @@ namespace Kodestruct.ETABS.ModelOutput.Frame
             nodeElement.SetAttribute("V_minor_min", V_minor_min.ToString());
             nodeElement.SetAttribute("M_minor_max", M_minor_max.ToString());
             nodeElement.SetAttribute("M_minor_min", M_minor_min.ToString());
-
-
+            nodeElement.SetAttribute("StationRatio", StationRatio.ToString());
+            nodeElement.SetAttribute("SpecifyStation", SpecifyStation.ToString());
             nodeElement.SetAttribute("SelectedCombo", SelectedCombo);
 
         }
@@ -425,8 +466,8 @@ namespace Kodestruct.ETABS.ModelOutput.Frame
 
             var attrSC = nodeElement.Attributes["SelectedCombo"]; SelectedCombo =attrSC.Value;
 
-
-
+            var attrStationRatio = nodeElement.Attributes["StationRatio"]; StationRatio = Double.Parse(attrStationRatio.Value);
+            var attrSpecifyStation = nodeElement.Attributes["SpecifyStation"]; SpecifyStation = bool.Parse(attrSpecifyStation.Value);
         }
 
 
@@ -463,7 +504,11 @@ namespace Kodestruct.ETABS.ModelOutput.Frame
             {
                 ErrorMessage = "";
                 FrameDataExtractor mde = new FrameDataExtractor();
-                FrameEnvelopeForceResult result = mde.GetSelectedFrameForces(SelectedCombo, "kip_in");
+                //bool SpecifyStation, double StationRatio
+
+                FrameEnvelopeForceResult result = mde.GetSelectedFrameForces(SelectedCombo, "kip_in", SpecifyStation, StationRatio);
+
+                
                 V_major_max = result.ShearMajorMax;
                 V_major_min = result.ShearMajorMin;
                 M_major_max = result.MomentMajorMax;
@@ -477,7 +522,7 @@ namespace Kodestruct.ETABS.ModelOutput.Frame
             }
             catch (Exception)
             {
-                SetDefaultParameters();
+                //SetDefaultParameters();
                 ErrorMessage = "Data extraction failed. Either ETABS is not running, or results are unavailable for selected Combo.";
             }
         }
@@ -486,6 +531,30 @@ namespace Kodestruct.ETABS.ModelOutput.Frame
         {
             //Add check if ETABS is running
             return true;
+        }
+        #endregion
+
+        #region IDataErrorInfo Members
+
+        string IDataErrorInfo.Error
+        {
+            get { return null; }
+        }
+
+        string IDataErrorInfo.this[string columnName]
+        {
+            get
+            {
+                if (columnName == "StationRatio")
+                {
+                    // Validate property and return a string if there is an error
+                    if (StationRatio>1 || StationRatio <0)
+                        return "Ratio cannot be greater than 1 or less than 0";
+                }
+
+                // If there's no error, null gets returned
+                return null;
+            }
         }
         #endregion
 

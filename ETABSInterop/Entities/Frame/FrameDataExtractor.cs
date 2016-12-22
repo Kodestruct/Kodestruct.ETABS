@@ -147,7 +147,7 @@ namespace Kodestruct.ETABS.Interop.Entities.Frame
            return result;
        }
 
-       public FrameEnvelopeForceResult GetSelectedFrameForces(string SelectedCombo, string UnitSystem)
+       public FrameEnvelopeForceResult GetSelectedFrameForces(string SelectedCombo, string UnitSystem, bool SpecifyStation, double StationRatio)
        {
            FrameEnvelopeForceResult result = null;
 
@@ -165,7 +165,15 @@ namespace Kodestruct.ETABS.Interop.Entities.Frame
 
                //Use frame extractor to get frame forces
                FrameForceExtractor ext = new FrameForceExtractor(ETABSModel);
-               result = ext.GetFrameForces(selectedFrameNames, SelectedCombo, units);
+               if (SpecifyStation == false)
+               {
+                   result = ext.GetFrameForces(selectedFrameNames, SelectedCombo, units);
+               }
+               else
+               {
+                   result = ext.GetFrameForcesAtStationRatio(selectedFrameNames, SelectedCombo, units,StationRatio);
+               }
+               
 
            }
            else
