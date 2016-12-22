@@ -128,8 +128,12 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\Controls\BooleanToVisibilityInvertedConverter.cs" />
-    <Compile Include="Common\Controls\BooleanToVisibiltyConverter.cs" />
+    <Compile Include="Common\Controls\BooleanToVisibilityInvertedConverter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\Controls\BooleanToVisibiltyConverter.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Common\Controls\DataEntryElement.xaml.cs">
       <DependentUpon>DataEntryElement.xaml</DependentUpon>
     </Compile>
