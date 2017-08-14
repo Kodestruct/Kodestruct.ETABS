@@ -25,11 +25,11 @@ namespace Kodestruct.ETABS.Interop.Entities.Wall
         public double CGTopY { get; set; }
         public double CGTopZ { get; set; }
 
-        public PierStoryData(string pierName, int _NumberStories, string _StoryName, double _AxisAngle, int _NumAreaObjs, int _NumLineObjs,
-                    double _WidthBot, double _ThicknessBot, double _WidthTop, double _ThicknessTop, string _MatProp, double _CGBotX, double _CGBotY, double _CGBotZ, double _CGTopX, double _CGTopY, double _CGTopZ)
+        public PierStoryData(string pierName, int NumberStories, string StoryName, double AxisAngle, int NumAreaObjs, int NumLineObjs,
+                    double WidthBot, double ThicknessBot, double WidthTop, double ThicknessTop, string MatProp, double CGBotX, double CGBotY, double CGBotZ, double CGTopX, double CGTopY, double CGTopZ)
         {
 
-            this.Name = Name;
+            this.Name = pierName;
             this.NumberStories = NumberStories;
             this.StoryName = StoryName;
             this.AxisAngle = AxisAngle;

@@ -83,6 +83,7 @@ namespace Kodestruct.ETABS.Interop.Entities.Wall.GeometryExtraction
                     );
                 for (int i = 0; i < _NumberStories; i++)
                 {
+                    string a = _MatProp[i];
                     PierStoryData thisStoryData = new PierStoryData(pierName,
                          _NumberStories,
                          _StoryName[i],
