@@ -643,7 +643,12 @@ namespace Kodestruct.ETABS.ModelOutput.Wall
                     if (SelectedStory!=null & SelectedCombo!=null)
                     {
 
-                        cr = AllResults.Where(k => k.ComboName == SelectedCombo).SelectMany(r => r.PierForces.Where(f => f.PierName == SelectedPier).Where(b => b.Result.PierPointLocation == ReportingPierPointLocation).Select(a => a.Result)).ToList();
+                        cr = AllResults.Where(k => k.ComboName == SelectedCombo)
+                            .SelectMany(r => r.PierForces
+                            .Where(f => f.PierName == SelectedPier)
+                            .Where(b => b.Result.PierPointLocation == ReportingPierPointLocation)
+                            .Where(b => b.Result.StoryName == _SelectedStory)
+                            .Select(a => a.Result)).ToList();
                     
                     }
                     //}
@@ -655,7 +660,11 @@ namespace Kodestruct.ETABS.ModelOutput.Wall
                     //{
                     if (SelectedStory != null & SelectedCombo != null)
                     {
-                        cr = AllResults.Where(k => k.ComboName == SelectedCombo).SelectMany(r => r.PierForces.Where(f => f.PierName == SelectedPier).Select(a => a.Result)).ToList();
+                        cr = AllResults.Where(k => k.ComboName == SelectedCombo)
+                            .SelectMany(r => r.PierForces
+                            .Where(f => f.PierName == SelectedPier)
+                            .Where(b => b.Result.StoryName == _SelectedStory)
+                            .Select(a => a.Result)).ToList();
                     }
                     //}
                 }
@@ -663,17 +672,20 @@ namespace Kodestruct.ETABS.ModelOutput.Wall
                 if (cr != null)
                 {
 
+                    if (cr.Count > 0)
+                    {
 
-                    V_major_max = cr.Select(r => r.V2_Max).Max();
-                    V_major_min = cr.Select(r => r.V2_Min).Min();
-                    M_major_max = cr.Select(r => r.M3_Max).Max();
-                    M_major_min = cr.Select(r => r.M3_Min).Min();
-                    P_max = cr.Select(r => r.P_Max).Max();
-                    P_min = cr.Select(r => r.P_Min).Min();
-                    V_minor_max = cr.Select(r => r.V3_Max).Max();
-                    V_minor_min = cr.Select(r => r.V3_Min).Min();
-                    M_minor_max = cr.Select(r => r.M2_Max).Max();
-                    M_minor_min = cr.Select(r => r.M2_Min).Min();
+                        V_major_max = cr.Select(r => r.V2_Max).Max();
+                        V_major_min = cr.Select(r => r.V2_Min).Min();
+                        M_major_max = cr.Select(r => r.M3_Max).Max();
+                        M_major_min = cr.Select(r => r.M3_Min).Min();
+                        P_max = cr.Select(r => r.P_Max).Max();
+                        P_min = cr.Select(r => r.P_Min).Min();
+                        V_minor_max = cr.Select(r => r.V3_Max).Max();
+                        V_minor_min = cr.Select(r => r.V3_Min).Min();
+                        M_minor_max = cr.Select(r => r.M2_Max).Max();
+                        M_minor_min = cr.Select(r => r.M2_Min).Min();
+                    }
                 }
 
             }

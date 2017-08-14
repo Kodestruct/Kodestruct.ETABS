@@ -32,7 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ETABS2016">
-      <HintPath>RefernceLibs\ETABS2016.dll</HintPath>
+      <HintPath>ReferenceLibraries\ETABS2016.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -90,6 +90,9 @@
     <Compile Include="Entities\Wall\ForceExtraction\Data\WallForceResult.cs" />
     <Compile Include="Entities\Wall\ForceExtraction\Data\WallPointResult.cs" />
     <Compile Include="Entities\Wall\ForceExtraction\PierForceExtractor.cs" />
+    <Compile Include="Entities\Wall\GeometryExtraction\Data\PierData.cs" />
+    <Compile Include="Entities\Wall\GeometryExtraction\Data\PierStoryData.cs" />
+    <Compile Include="Entities\Wall\GeometryExtraction\PierGeometryExtractor.cs" />
     <Compile Include="Entities\Wall\PierManager.cs" />
     <Compile Include="Entities\Wall\WallDataExtractor.cs" />
     <Compile Include="ETABSModelManager.cs" />
@@ -105,11 +108,11 @@
     <Compile Include="Entities\Selection\SelectionManagerFrames.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="RefernceLibs\ETABS2015.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="ETABSInterop.licenseheader" />
     <None Include="LICENSE" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ReferenceLibraries\ETABS2016.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
